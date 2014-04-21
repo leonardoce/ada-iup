@@ -14,9 +14,14 @@ package body Iup.Util is
         return Common_Attribute("NUMDIV", Positive'Image(Value));
     end;
 
-    function Sizecol(Value:Positive) return Attribute_Declaration_Type is
+    function Size_col(Value:Positive) return Attribute_Declaration_Type is
     begin
         return Common_Attribute("SIZECOL", Positive'Image(Value));
+    end;
+
+    function Size_lin(Value:Positive) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("SIZELIN", Positive'Image(Value));
     end;
 
     function Title(Value:String) return Attribute_Declaration_Type is

@@ -11,7 +11,8 @@ package Iup.Util is
     type Expand_Type is (Yes, Horizontal, Vertical, No);
 
     function Numdiv(Value:Positive) return Attribute_Declaration_Type;
-    function Sizecol(Value:Positive) return Attribute_Declaration_Type;
+    function Size_col(Value:Positive) return Attribute_Declaration_Type;
+    function Size_lin(Value:Positive) return Attribute_Declaration_Type;
     function Margin(X:Natural; Y:Natural) return Attribute_Declaration_Type;
     function Gap(X:Natural; Y:Natural) return Attribute_Declaration_Type;
     function Gap_Lin(X:Natural) return Attribute_Declaration_Type;

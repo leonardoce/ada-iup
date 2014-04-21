@@ -15,17 +15,16 @@ procedure provadue_iup is
 
     Main_Dialog: Iup.Handle;
 
-    Tf_Username : Iup.Handle := Text;
-    Taf_Username : Iup.Handle := Text( (1=>Expand(Horizontal)) );
+    Tf_Username : Iup.Handle := Text( (1=>Expand(Horizontal)) );
     Tf_Password : Iup.Handle := Text( (Password(True), Expand(Horizontal)) );
 
     Event: Iup.Direct.Event_Occurrence_Type;
 begin
     Iup.Direct.Stop_On_Action(Bt_Ok);
 
-    Main_Dialog := Dialog( (Title("Login window"), Margin(5,5), Gap_Lin(3), Gap_Col(3) ),
+    Main_Dialog := Dialog( (Title("Login window"), Margin(5,5), Gap_Lin(7), Gap_Col(7) ),
         V_Box((
-            Grid_Box( (NumDiv(2), Sizecol(1) ), (
+            Grid_Box( (NumDiv(2), Size_lin(1), Size_col(1) ), (
                 Label("Username:"), Tf_Username,
                 Label("Password:"), Tf_Password
             )),
