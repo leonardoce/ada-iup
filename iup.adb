@@ -198,6 +198,13 @@ package body Iup is
             Set_Attribute(Ih, Name, Internal_Callback_Name);
         end;
     end;
+
+    procedure Append(Ih:Handle; Children: Handle_Array) is
+    begin
+        for i in Children'Range loop
+            Append(Ih, Children(i));
+        end loop;
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

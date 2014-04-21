@@ -34,6 +34,9 @@ package Iup is
     -- Represent an IUP Object
     type Handle is private;
 
+    -- Represent an Array of IUP Objects
+    type Handle_Array is array (Positive range <>) of Handle;
+
     -- This is the callback result
     type Callback_Result_Type is (Ignore, Default, Close, Continue);
 
@@ -129,6 +132,9 @@ package Iup is
     procedure Append(Ih:Handle; New_Child:Handle);
     pragma Import(C, Append, "IupAppend");
 
+    -- Procedure: Append
+    procedure Append(Ih:Handle; Children: Handle_Array);
+
     -- Function: Text
     -- Creates an editable text field.
     function Text return Handle;
@@ -150,6 +156,7 @@ package Iup is
     -- Procedure: Loop_Step_Wait
     -- Runs one iteration of the message loop.
     function Loop_Step_Wait return Callback_Result_Type;
+
 private
 
     type Handle is new System.Address;
