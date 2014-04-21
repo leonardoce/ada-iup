@@ -87,6 +87,49 @@ package body Iup is
         return Iup_Zbox(System.Null_Address);
     end;
 
+    -- --------------------------------
+    -- Callback return value management
+    -- --------------------------------
+
+    function Callback_Result_To_Integer(Callback_Result: Callback_Result_Type) return Integer is
+    begin
+        case Callback_Result is
+            when Ignore => return -1;
+            when Default => return -2;
+            when Close => return -3;
+            when Continue => return -4;
+            when others => return -4;
+        end case;
+    end;
+
+    function Integer_To_Callback_Result(V: Integer) return Callback_Result_Type is
+    begin
+        if V=(-1) then
+            return Ignore;
+        elsif V=(-2) then
+            return Default;
+        elsif V=(-3) then
+            return Close;
+        elsif V=(-4) then
+            return Continue;
+        else
+            return Continue;
+        end if;
+    end;
+
+    function Loop_Step return Callback_Result_Type is
+        function Iup_Loop_Step return Integer;
+        pragma Import(C, Iup_Loop_Step, "IupLoopStep");
+    begin
+        return Integer_To_Callback_Result(Iup_Loop_Step);
+    end;
+
+    function Loop_Step_Wait return Callback_Result_Type is
+        function Iup_Loop_Step_Wait return Integer;
+        pragma Import(C, Iup_Loop_Step_Wait, "IupLoopStepWait");
+    begin
+        return Integer_To_Callback_Result(Iup_Loop_Step_Wait);
+    end;
 
     -- ------------------------------------------
     -- Callback management. Deep black magic here
@@ -127,13 +170,7 @@ package body Iup is
             Callback_Id := Callback_Id_Type'Value(Callback_Name(Ada_Callback_Prefix'Last+1..Callback_Name'Last));
             Callback_Result := Callback_Vector_Pkg.Element(Callback_Vector, Positive(Callback_Id))(Ih);
 
-            case Callback_Result is
-                when Ignore => return -1;
-                when Default => return -2;
-                when Close => return -3;
-                when Continue => return -4;
-                when others => return -4;
-            end case;
+            return Callback_Result_To_Integer(Callback_Result);
         exception
             when Constraint_Error => raise Program_Error with "IupAda callback with the wrong id " & Callback_Name;
         end;

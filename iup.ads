@@ -142,6 +142,14 @@ package Iup is
     --   name - Attribute name of the callback
     --   callback - address of a function.
     procedure Set_Callback(Ih:Handle; Name:String; Callback:Callback_Type);
+
+    -- Procedure: Loop_Step
+    -- Runs one iteration of the message loop.
+    function Loop_Step return Callback_Result_Type;
+
+    -- Procedure: Loop_Step_Wait
+    -- Runs one iteration of the message loop.
+    function Loop_Step_Wait return Callback_Result_Type;
 private
 
     type Handle is new System.Address;
