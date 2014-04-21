@@ -1,6 +1,7 @@
 with Ada.Text_IO;
 
 with Iup;
+with Iup.Util;
 with Iup.Direct;
 
 procedure provadue_iup is
@@ -8,13 +9,36 @@ procedure provadue_iup is
     use type Iup.Handle;
     use type Iup.Direct.Event_Type;
 
-    Bt_Ok: Iup.Handle := Iup.Button("Press this button!");
-    Dialog: Iup.Handle := Iup.Dialog(Bt_Ok);
+    Bt_Ok: Iup.Handle := Iup.Button("Ok");
+    Bt_Cancel: Iup.Handle := Iup.Button("Cancel");
+
+    Dialog: Iup.Handle;
+
+    Tf_Username : Iup.Handle := Iup.Text;
+    Tf_Password : Iup.Handle := Iup.Text;
 
     Event: Iup.Direct.Event_Occurrence_Type;
+    Scatola: Iup.Handle;
 begin
     Iup.Direct.Stop_On_Action(Bt_Ok);
+
+    Scatola := Iup.Util.V_Box( (
+        Iup.Util.Grid_Box(2, 
+        (
+            Iup.Label("Username:"), Tf_Username,
+            Iup.Label("Password"), Tf_Password
+        )),
+        Iup.Util.H_Box(
+        (
+            Bt_Ok, Bt_Cancel
+        ))
+    ));
+
+    Iup.Set_Attribute(Scatola, "NUMDIV", "2");
+
+    Dialog := Iup.Dialog(Scatola);
     Iup.Direct.Stop_On_Close(Dialog);
+
     Iup.Show(Dialog);
 
     loop

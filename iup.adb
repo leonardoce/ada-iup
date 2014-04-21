@@ -212,6 +212,14 @@ package body Iup is
     begin
         return Iup_Label(C.To_C(Title));
     end;
+
+    function Grid_Box return Handle is
+        function Grid_Box(Nope: System.Address) return Handle;
+        pragma Import(C, Grid_Box, "IupGridBox");
+    begin
+        return Grid_Box(System.Null_Address);
+    end;
+
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

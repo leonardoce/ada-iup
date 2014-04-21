@@ -110,9 +110,6 @@ package Iup is
     -- Creates a void container for composing elements horizontally. It is a box that arranges 
     -- the elements it contains from left to right.
     function H_Box return Handle;
-
-    -- Function: H_Box
-    function H_Box(Children:Handle_Array) return Handle;
     
     -- Function: H_Box
     -- Creates a void container for composing elements vertically. It is a box that arranges 
@@ -123,6 +120,12 @@ package Iup is
     -- Creates a void container for composing elements vertically. It is a box that arranges 
     -- the elements it contains from top to bottom.
     function Z_Box return Handle;
+
+    -- Function: Grid_Box
+    -- Creates a void container for composing elements in a regular grid. It is a box that 
+    -- arranges the elements it contains from top to bottom and from left to right, but can 
+    -- distribute the elements in lines or in columns.
+    function Grid_Box return Handle;
 
     -- Procedure: Append
     -- Inserts an interface element at the end of the container, after the last element of the 
