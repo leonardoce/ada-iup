@@ -1,4 +1,47 @@
 package body Iup.Util is
+    -- -----------------
+    -- Attribute setters
+    -- -----------------
+    
+    function Common_Attribute(Name:String; Value:String) return Attribute_Declaration_Type is
+        use UB;
+    begin
+        return (Name=>To_Unbounded_String(Name), Value=>To_Unbounded_String(Value));
+    end;
+
+    function Numdiv(Value:Positive) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("NUMDIV", Positive'Image(Value));
+    end;
+
+    function Sizecol(Value:Positive) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("SIZECOL", Positive'Image(Value));
+    end;
+
+    function Title(Value:String) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("TITLE", Value);
+    end;
+
+    procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
+        use UB;
+    begin
+        Set_Attribute(Ih, To_String(Attribute.Name), To_String(Attribute.Value));
+    end;
+
+    procedure Set(Ih: Handle; Attribute:Attribute_Initialization_Type) is
+        use UB;
+    begin
+        for i in Attribute'Range loop
+            Set(Ih, Attribute(i));
+        end loop;
+    end;
+
+    -- ---------------
+    -- Widget creators
+    -- ---------------
+
     function H_Box(Children:Handle_Array) return Handle is
         Result : Handle := H_Box;
     begin
@@ -20,10 +63,17 @@ package body Iup.Util is
         return Result;
     end;
 
-    function Grid_Box(Num_Div:Positive; Children:Handle_Array) return Handle is
+    function Grid_Box(Attributes:Attribute_Initialization_Type; Children:Handle_Array) return Handle is
         Result : Handle := Grid_Box(Children);
     begin
-        Set_Attribute(Result, "NUMDIV", Positive'Image(Num_Div));
+        Set(Result, Attributes);
+        return Result;
+    end;
+
+    function Dialog(Attributes:Attribute_Initialization_Type; Child:Handle) return Handle is
+        Result : Handle := Dialog(Child);
+    begin
+        Set(Result, Attributes);
         return Result;
     end;
 end;

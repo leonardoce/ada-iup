@@ -6,13 +6,14 @@ with Iup.Direct;
 
 procedure provadue_iup is
     package IO renames Ada.Text_IO;
-    use type Iup.Handle;
+    use Iup;
+    use Iup.Util;
     use type Iup.Direct.Event_Type;
 
     Bt_Ok: Iup.Handle := Iup.Button("Ok");
     Bt_Cancel: Iup.Handle := Iup.Button("Cancel");
 
-    Dialog: Iup.Handle;
+    Main_Dialog: Iup.Handle;
 
     Tf_Username : Iup.Handle := Iup.Text;
     Tf_Password : Iup.Handle := Iup.Text;
@@ -21,23 +22,21 @@ procedure provadue_iup is
 begin
     Iup.Direct.Stop_On_Action(Bt_Ok);
 
-    Dialog := Iup.Dialog(
-        Iup.Util.V_Box( (
-            Iup.Util.Grid_Box(2, 
-            (
-                Iup.Label("Username:"), Tf_Username,
-                Iup.Label("Password"), Tf_Password
+    Main_Dialog := Dialog( (1=>Title("Login window")),
+        V_Box((
+            Grid_Box( (NumDiv(2), Sizecol(1)), (
+                Label("Username:"), Tf_Username,
+                Label("Password:"), Tf_Password
             )),
-            Iup.Util.H_Box(
-            (
+            H_Box( (
                 Bt_Ok, Bt_Cancel
             ))
         ))
     );
 
-    Iup.Direct.Stop_On_Close(Dialog);
+    Iup.Direct.Stop_On_Close(Main_Dialog);
 
-    Iup.Show(Dialog);
+    Iup.Show(Main_Dialog);
 
     loop
         Event := Iup.Direct.Get_Next_Signal;
