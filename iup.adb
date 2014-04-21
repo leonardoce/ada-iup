@@ -47,6 +47,20 @@ package body Iup is
     begin
         return Iup_Hbox(System.Null_Address);
     end;
+
+    function V_Box return Handle is
+        function Iup_Vbox(Nope:System.Address) return Handle;
+        pragma Import(C, Iup_Vbox, "IupVbox");
+    begin
+        return Iup_Vbox(System.Null_Address);
+    end;
+
+    function Z_Box return Handle is
+        function Iup_Zbox(Nope:System.Address) return Handle;
+        pragma Import(C, Iup_Zbox, "IupZbox");
+    begin
+        return Iup_Zbox(System.Null_Address);
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

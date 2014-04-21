@@ -77,6 +77,31 @@ package Iup is
     -- the elements it contains from left to right.
     function H_Box return Handle;
     
+    -- Function: H_Box
+    -- Creates a void container for composing elements vertically. It is a box that arranges 
+    -- the elements it contains from top to bottom.
+    function V_Box return Handle;
+    
+    -- Function: Z_Box
+    -- Creates a void container for composing elements vertically. It is a box that arranges 
+    -- the elements it contains from top to bottom.
+    function Z_Box return Handle;
+
+    -- Procedure: Append
+    -- Inserts an interface element at the end of the container, after the last element of the 
+    -- container. Valid for any element that contains other elements like dialog, frame, hbox, 
+    -- vbox, zbox or menu.
+    --
+    -- Arguments:
+    --   ih - Identifier of the interface element. If NULL will set in the global environment.
+    --   New_Child - Identifier of the new interface element.
+    procedure Append(Ih:Handle; New_Child:Handle);
+    pragma Import(C, Append, "IupAppend");
+
+    -- Function: Text
+    -- Creates an editable text field.
+    function Text return Handle;
+    pragma Import(C, Text, "IupText");
 private
 
     type Handle is new System.Address;
