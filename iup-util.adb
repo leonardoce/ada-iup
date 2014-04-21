@@ -24,6 +24,26 @@ package body Iup.Util is
         return Common_Attribute("TITLE", Value);
     end;
 
+    function Margin(X:Natural; Y:Natural) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("MARGIN", Natural'Image(X) & "X" & Natural'Image(Y));
+    end;
+
+    function Gap(X:Natural; Y:Natural) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("GAP", Natural'Image(X) & "X" & Natural'Image(Y));
+    end;
+
+    function Gap_Lin(X:Natural) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("GAPLIN", Natural'Image(X));
+    end;
+
+    function Gap_Col(X:Natural) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("GAPCOL", Natural'Image(X));
+    end;
+
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
         use UB;
     begin

@@ -10,6 +10,10 @@ package Iup.Util is
 
     function Numdiv(Value:Positive) return Attribute_Declaration_Type;
     function Sizecol(Value:Positive) return Attribute_Declaration_Type;
+    function Margin(X:Natural; Y:Natural) return Attribute_Declaration_Type;
+    function Gap(X:Natural; Y:Natural) return Attribute_Declaration_Type;
+    function Gap_Lin(X:Natural) return Attribute_Declaration_Type;
+    function Gap_Col(X:Natural) return Attribute_Declaration_Type;
     function Title(Value:String) return Attribute_Declaration_Type;
 
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type);
