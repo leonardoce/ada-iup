@@ -144,7 +144,6 @@ package Iup is
     -- Function: Text
     -- Creates an editable text field.
     function Text return Handle;
-    pragma Import(C, Text, "IupText");
 
     -- Procedure: Set_Callback
     -- Associates a callback to an event.

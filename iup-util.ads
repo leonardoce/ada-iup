@@ -8,6 +8,8 @@ package Iup.Util is
     type Attribute_Declaration_Type is private;
     type Attribute_Initialization_Type is array (Positive range <>) of Attribute_Declaration_Type;
 
+    type Expand_Type is (Yes, Horizontal, Vertical, No);
+
     function Numdiv(Value:Positive) return Attribute_Declaration_Type;
     function Sizecol(Value:Positive) return Attribute_Declaration_Type;
     function Margin(X:Natural; Y:Natural) return Attribute_Declaration_Type;
@@ -15,6 +17,8 @@ package Iup.Util is
     function Gap_Lin(X:Natural) return Attribute_Declaration_Type;
     function Gap_Col(X:Natural) return Attribute_Declaration_Type;
     function Title(Value:String) return Attribute_Declaration_Type;
+    function Password(Value:Boolean) return Attribute_Declaration_Type;
+    function Expand(Value:Expand_Type) return Attribute_Declaration_Type;
 
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type);
     procedure Set(Ih: Handle; Attribute:Attribute_Initialization_Type);
@@ -38,6 +42,8 @@ package Iup.Util is
     -- Function: Dialog
     function Dialog(Attributes:Attribute_Initialization_Type; Child:Handle) return Handle;
 
+    -- Function: Text
+    function Text(Attributes:Attribute_Initialization_Type) return Handle;
 private
     package UB renames Ada.Strings.Unbounded;
 

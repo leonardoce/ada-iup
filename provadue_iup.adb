@@ -15,8 +15,9 @@ procedure provadue_iup is
 
     Main_Dialog: Iup.Handle;
 
-    Tf_Username : Iup.Handle := Iup.Text;
-    Tf_Password : Iup.Handle := Iup.Text;
+    Tf_Username : Iup.Handle := Text;
+    Taf_Username : Iup.Handle := Text( (1=>Expand(Horizontal)) );
+    Tf_Password : Iup.Handle := Text( (Password(True), Expand(Horizontal)) );
 
     Event: Iup.Direct.Event_Occurrence_Type;
 begin
@@ -35,7 +36,6 @@ begin
     );
 
     Iup.Direct.Stop_On_Close(Main_Dialog);
-
     Iup.Show(Main_Dialog);
 
     loop

@@ -220,6 +220,12 @@ package body Iup is
         return Grid_Box(System.Null_Address);
     end;
 
+    function Text return Handle is
+        function Iup_Text(Nope: System.Address) return Handle;
+        pragma Import(C, Iup_Text, "IupText");
+    begin
+        return Iup_Text(System.Null_Address);
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

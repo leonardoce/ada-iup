@@ -44,6 +44,25 @@ package body Iup.Util is
         return Common_Attribute("GAPCOL", Natural'Image(X));
     end;
 
+    function Password(Value:Boolean) return Attribute_Declaration_Type is
+    begin
+        if Value then
+            return Common_Attribute("PASSWORD", "YES");
+        else
+            return Common_Attribute("PASSWORD", "NO");
+        end if;
+    end;
+
+    function Expand(Value:Expand_Type) return Attribute_Declaration_Type is
+    begin
+        case Value is
+            when Horizontal => return Common_Attribute("EXPAND", "HORIZONTAL");
+            when Vertical => return Common_Attribute("EXPAND", "VERTICAL");
+            when Yes => return Common_Attribute("EXPAND", "YES");
+            when No => return Common_Attribute("EXPAND", "NO");
+        end case;
+    end;
+
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
         use UB;
     begin
@@ -92,6 +111,13 @@ package body Iup.Util is
 
     function Dialog(Attributes:Attribute_Initialization_Type; Child:Handle) return Handle is
         Result : Handle := Dialog(Child);
+    begin
+        Set(Result, Attributes);
+        return Result;
+    end;
+
+    function Text(Attributes:Attribute_Initialization_Type) return Handle is
+        Result : Handle := Text;
     begin
         Set(Result, Attributes);
         return Result;
