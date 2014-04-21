@@ -25,6 +25,21 @@ package body Iup is
     begin
         Iup_Set_Attribute(Ih, C.To_C(name), C.To_C(Value));
     end;
+
+    function Get_Attribute(Ih:Handle; name:String) return String is
+        use CStrings;
+
+        function Iup_Get_Attribute(Id:Handle; name:C.char_array) return chars_ptr;
+        pragma Import(C, Iup_Get_Attribute, "IupGetAttribute");
+
+        result: chars_ptr := Iup_Get_Attribute(Ih, C.To_C(name));
+    begin
+        if result = Null_Ptr then 
+            return "";
+        else
+            return Cstrings.Value(result);
+        end if;
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

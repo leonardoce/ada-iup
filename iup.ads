@@ -63,6 +63,14 @@ package Iup is
     --   name - name of the attribute.
     --   value - value of the attribute
     procedure Set_Attribute(Ih:Handle; name:String; value:String);
+
+    -- Function: Get_Attribute
+    -- Returns the value of an interface element attribute. See also the Attributes Guide section.
+    --
+    -- Arguments:
+    --   ih - Identifier of the interface element. If NULL will set in the global environment.
+    --   name - name of the attribute.
+    function Get_Attribute(Ih:Handle; name:String) return String;
     
 private
 
