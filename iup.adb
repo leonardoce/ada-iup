@@ -1,3 +1,6 @@
+with Ada.Containers;
+with Ada.Containers.Vectors;
+
 with Interfaces.C;
 with Interfaces.C.Strings;
 
@@ -19,11 +22,11 @@ package body Iup is
     end Button;
 
     procedure Set_Attribute(Ih:Handle; name:String; value:String) is
-        procedure Iup_Set_Attribute(Id:Handle; name:C.char_array; value:C.char_array);
-        pragma Import(C, Iup_Set_Attribute, "IupSetAttribute");
+        procedure Iup_Store_Attribute(Id:Handle; name:C.char_array; value:C.char_array);
+        pragma Import(C, Iup_Store_Attribute, "IupStoreAttribute");
 
     begin
-        Iup_Set_Attribute(Ih, C.To_C(name), C.To_C(Value));
+        Iup_Store_Attribute(Ih, C.To_C(name), C.To_C(Value));
     end;
 
     function Get_Attribute(Ih:Handle; name:String) return String is
@@ -60,6 +63,81 @@ package body Iup is
         pragma Import(C, Iup_Zbox, "IupZbox");
     begin
         return Iup_Zbox(System.Null_Address);
+    end;
+
+
+    -- ------------------------------------------
+    -- Callback management. Deep black magic here
+    -- ------------------------------------------
+
+    package Callback_Vector_Pkg is new Ada.Containers.Vectors(Positive, Callback_Type);
+    
+    Ada_Callback_Prefix : constant String := "__ADA_CALLBACK_ID__";
+    Callback_Vector: Callback_Vector_Pkg.Vector;
+    subtype Callback_Id_Type is Ada.Containers.Count_Type;
+
+
+    function Internal_Callback(Ih:Handle) return Integer;
+    pragma Convention(C, Internal_Callback);
+
+    function Internal_Callback(Ih:Handle) return Integer is
+        use type CStrings.chars_ptr;
+
+        function Iup_Get_Action_Name return CStrings.chars_ptr;
+        pragma Import(C, Iup_Get_Action_Name, "IupGetActionName");
+
+        C_Callback_Name : CStrings.chars_ptr;
+    begin
+        C_Callback_Name := Iup_Get_Action_Name;
+        if C_Callback_Name = CStrings.Null_Ptr then
+            raise Program_Error with "IupAda callback invoked from a non Ada callback. Why?";
+        end if;
+
+        declare 
+            Callback_Name : String := CStrings.Value(Iup_Get_Action_Name);
+            Callback_Id : Callback_Id_Type;
+            Callback_Result : Callback_Result_Type;
+        begin
+            if Callback_Name(Ada_Callback_Prefix'Range) /= Ada_Callback_Prefix then
+                raise Program_Error with "IupAda callback invoked with the wrong name " & Callback_Name & ". This sounds like an internal error";
+            end if;
+
+            Callback_Id := Callback_Id_Type'Value(Callback_Name(Ada_Callback_Prefix'Last+1..Callback_Name'Last));
+            Callback_Result := Callback_Vector_Pkg.Element(Callback_Vector, Positive(Callback_Id))(Ih);
+
+            case Callback_Result is
+                when Ignore => return -1;
+                when Default => return -2;
+                when Close => return -3;
+                when Continue => return -4;
+                when others => return -4;
+            end case;
+        exception
+            when Constraint_Error => raise Program_Error with "IupAda callback with the wrong id " & Callback_Name;
+        end;
+    end;
+
+    procedure Set_Callback(Ih:Handle; Name:String; Callback:Callback_Type) is
+        type Internal_Callback_Access is access function(Ih:Handle) return Integer;
+        pragma Convention(C, Internal_Callback_Access);
+
+        procedure Iup_Set_Callback(Ih:Handle; Name: C.char_array; Callback:Internal_Callback_Access);
+        pragma Import(C, Iup_Set_Callback, "IupSetCallback");
+
+        procedure Iup_Set_Function(Name: C.char_array; Callback:Internal_Callback_Access);
+        pragma Import(C, Iup_Set_Function, "IupSetFunction");
+
+        Callback_Id : Callback_Id_Type;
+    begin
+        Callback_Vector_Pkg.Append(Callback_Vector, Callback);
+        Callback_Id := Callback_Vector_Pkg.Length(Callback_Vector);
+
+        declare
+            Internal_Callback_Name : String := Ada_Callback_Prefix & Callback_Id_Type'Image(Callback_Id); 
+        begin
+            Iup_Set_Function(C.To_C(Internal_Callback_Name), Internal_Callback'Access);
+            Set_Attribute(Ih, Name, Internal_Callback_Name);
+        end;
     end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);

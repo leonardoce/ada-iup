@@ -3,11 +3,20 @@
 -- GUI library. This package, in the initializiation procedure,
 -- will initialize the IUP Library
 
+-- See https://github.com/phasis68/iup_mac/blob/master/include/iup.h
+
 with System;
 
 package Iup is
 
+    -- Represent an IUP Object
     type Handle is private;
+
+    -- This is the callback result
+    type Callback_Result_Type is (Ignore, Default, Close, Continue);
+
+    -- This function is returned by a callback invoked by IUP
+    type Callback_Type is access function (Widget:Handle) return Callback_Result_Type;
 
     -- Function: Button
     --
@@ -102,6 +111,15 @@ package Iup is
     -- Creates an editable text field.
     function Text return Handle;
     pragma Import(C, Text, "IupText");
+
+    -- Procedure: Set_Callback
+    -- Associates a callback to an event.
+    --
+    -- Arguments:
+    --   ih - Identifier of the interface element.
+    --   name - Attribute name of the callback
+    --   callback - address of a function.
+    procedure Set_Callback(Ih:Handle; Name:String; Callback:Callback_Type);
 private
 
     type Handle is new System.Address;
