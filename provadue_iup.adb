@@ -28,7 +28,7 @@ begin
                 Label("Username:"), Tf_Username,
                 Label("Password:"), Tf_Password
             )),
-            H_Box( (
+            H_Box((
                 Bt_Ok, Bt_Cancel
             ))
         ))
