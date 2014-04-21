@@ -40,6 +40,13 @@ package body Iup is
             return Cstrings.Value(result);
         end if;
     end;
+
+    function H_Box return Handle is
+        function Iup_Hbox(Nope:System.Address) return Handle;
+        pragma Import(C, Iup_Hbox, "Iup_Hbox");
+    begin
+        return Iup_Hbox(System.Null_Address);
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

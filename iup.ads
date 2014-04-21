@@ -71,6 +71,11 @@ package Iup is
     --   ih - Identifier of the interface element. If NULL will set in the global environment.
     --   name - name of the attribute.
     function Get_Attribute(Ih:Handle; name:String) return String;
+
+    -- Function: H_Box
+    -- Creates a void container for composing elements horizontally. It is a box that arranges 
+    -- the elements it contains from left to right.
+    function H_Box return Handle;
     
 private
 
