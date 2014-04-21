@@ -205,6 +205,13 @@ package body Iup is
             Append(Ih, Children(i));
         end loop;
     end;
+
+    function Label(Title:String) return Handle is
+        function Iup_Label(Title:C.char_array) return Handle;
+        pragma Import(C, Iup_Label, "IupLabel");
+    begin
+        return Iup_Label(C.To_C(Title));
+    end;
 begin
     Iup_Open(System.Null_Address, System.Null_Address);
 end Iup;

@@ -157,6 +157,10 @@ package Iup is
     -- Runs one iteration of the message loop.
     function Loop_Step_Wait return Callback_Result_Type;
 
+    -- Function: Label
+    -- Creates a label interface element, which displays a separator, a text or an image.
+    function Label(Title:String) return Handle;
+
 private
 
     type Handle is new System.Address;
