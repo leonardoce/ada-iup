@@ -110,6 +110,9 @@ package Iup is
     -- Creates a void container for composing elements horizontally. It is a box that arranges 
     -- the elements it contains from left to right.
     function H_Box return Handle;
+
+    -- Function: H_Box
+    function H_Box(Children:Handle_Array) return Handle;
     
     -- Function: H_Box
     -- Creates a void container for composing elements vertically. It is a box that arranges 
