@@ -43,7 +43,7 @@ package body Iup is
 
     function H_Box return Handle is
         function Iup_Hbox(Nope:System.Address) return Handle;
-        pragma Import(C, Iup_Hbox, "Iup_Hbox");
+        pragma Import(C, Iup_Hbox, "IupHbox");
     begin
         return Iup_Hbox(System.Null_Address);
     end;
