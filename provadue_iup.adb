@@ -43,9 +43,9 @@ procedure provadue_iup is
 begin
     Iup.Direct.Stop_On_Action(Bt_Ok);
 
-    Main_Dialog := Dialog( (Title("Login window"), Margin(10,10), Gap_Lin(7), Gap_Col(7), Size(300, 100) ),
+    Main_Dialog := Dialog( (Title("Login window"), Margin(10,10), Gap_Lin(7), Gap_Col(32), Size(300, 100) ),
         V_Box((
-            Grid_Box( (NumDiv(2), Size_lin(1), Size_col(1) ), (
+            Grid_Box( (NumDiv(2), Size_lin(1), Size_col(1), Alignment_Lines(Align_Center) ), (
                 Label("Username:"), Tf_Username,
                 Label("Password:"), Tf_Password
             )),
