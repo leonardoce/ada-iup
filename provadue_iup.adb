@@ -31,8 +31,8 @@ procedure provadue_iup is
     use Iup.Util;
     use type Iup.Direct.Event_Type;
 
-    Bt_Ok: Iup.Handle := Iup.Button("Ok");
-    Bt_Cancel: Iup.Handle := Iup.Button("Cancel");
+    Bt_Ok: Iup.Handle := Button("Ok", (1=>Expand(Horizontal)));
+    Bt_Cancel: Iup.Handle := Button("Cancel", (1=>Expand(Horizontal)));
 
     Main_Dialog: Iup.Handle;
 
@@ -43,7 +43,7 @@ procedure provadue_iup is
 begin
     Iup.Direct.Stop_On_Action(Bt_Ok);
 
-    Main_Dialog := Dialog( (Title("Login window"), Margin(5,5), Gap_Lin(7), Gap_Col(7) ),
+    Main_Dialog := Dialog( (Title("Login window"), Margin(10,10), Gap_Lin(7), Gap_Col(7), Size(300, 100) ),
         V_Box((
             Grid_Box( (NumDiv(2), Size_lin(1), Size_col(1) ), (
                 Label("Username:"), Tf_Username,
