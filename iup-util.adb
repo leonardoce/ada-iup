@@ -89,6 +89,11 @@ package body Iup.Util is
         end case;
     end;
 
+    function Size(X:Natural; Y:Natural) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("SIZE", Natural'Image(X) & "x" & Natural'Image(Y));
+    end;
+
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
         use UB;
     begin
@@ -144,6 +149,13 @@ package body Iup.Util is
 
     function Text(Attributes:Attribute_Initialization_Type) return Handle is
         Result : Handle := Text;
+    begin
+        Set(Result, Attributes);
+        return Result;
+    end;
+
+    function Button(Title:String; Attributes:Attribute_Initialization_Type) return Handle is
+        Result : Handle := Button(Title);
     begin
         Set(Result, Attributes);
         return Result;

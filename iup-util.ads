@@ -11,6 +11,7 @@ package Iup.Util is
     type Expand_Type is (Yes, Horizontal, Vertical, No);
 
     function Numdiv(Value:Positive) return Attribute_Declaration_Type;
+    function Size(X:Natural; Y:Natural) return Attribute_Declaration_Type;
     function Size_col(Value:Positive) return Attribute_Declaration_Type;
     function Size_lin(Value:Positive) return Attribute_Declaration_Type;
     function Margin(X:Natural; Y:Natural) return Attribute_Declaration_Type;
@@ -45,6 +46,9 @@ package Iup.Util is
 
     -- Function: Text
     function Text(Attributes:Attribute_Initialization_Type) return Handle;
+
+    -- Function: Button
+    function Button(Title:String; Attributes:Attribute_Initialization_Type) return Handle;
 private
     package UB renames Ada.Strings.Unbounded;
 
