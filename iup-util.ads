@@ -27,6 +27,8 @@ package Iup.Util is
     function Alignment_Column(Column_Index: Positive; Alignment:Column_Alignment_Type) return Attribute_Declaration_Type;
     function Alignment_Lines(Alignment:Line_Alignment_Type) return Attribute_Declaration_Type;
     function Alignment_Columns(Alignment:Column_Alignment_Type) return Attribute_Declaration_Type;
+    function Visible_Columns(Value:Positive) return Attribute_Declaration_Type;
+    function Visible_Lines(Value:Positive) return Attribute_Declaration_Type;
 
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type);
     procedure Set(Ih: Handle; Attribute:Attribute_Initialization_Type);

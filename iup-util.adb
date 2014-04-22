@@ -132,6 +132,17 @@ package body Iup.Util is
         return Common_Attribute("ALIGNMENTCOL", Alignment_To_String(Alignment));
     end;
 
+    function Visible_Columns(Value:Positive) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("VISIBLECOLUMNS", Positive'Image(Value));
+    end;
+
+    function Visible_Lines(Value:Positive) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("VISIBLELINES", Positive'Image(Value));
+    end;
+
+
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
         use UB;
     begin
