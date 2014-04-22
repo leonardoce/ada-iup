@@ -9,6 +9,8 @@ package Iup.Util is
     type Attribute_Initialization_Type is array (Positive range <>) of Attribute_Declaration_Type;
 
     type Expand_Type is (Yes, Horizontal, Vertical, No);
+    type Line_Alignment_Type is (Align_Top, Align_Center, Align_Bottom);
+    type Column_Alignment_Type is (Align_Left, Align_Center, Align_Right);
 
     function Numdiv(Value:Positive) return Attribute_Declaration_Type;
     function Size(X:Natural; Y:Natural) return Attribute_Declaration_Type;
@@ -21,6 +23,10 @@ package Iup.Util is
     function Title(Value:String) return Attribute_Declaration_Type;
     function Password(Value:Boolean) return Attribute_Declaration_Type;
     function Expand(Value:Expand_Type) return Attribute_Declaration_Type;
+    function Alignment_Line(Line_Index: Positive; Alignment:Line_Alignment_Type) return Attribute_Declaration_Type;
+    function Alignment_Column(Column_Index: Positive; Alignment:Column_Alignment_Type) return Attribute_Declaration_Type;
+    function Alignment_Lines(Alignment:Line_Alignment_Type) return Attribute_Declaration_Type;
+    function Alignment_Columns(Alignment:Column_Alignment_Type) return Attribute_Declaration_Type;
 
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type);
     procedure Set(Ih: Handle; Attribute:Attribute_Initialization_Type);

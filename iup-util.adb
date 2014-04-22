@@ -94,6 +94,44 @@ package body Iup.Util is
         return Common_Attribute("SIZE", Natural'Image(X) & "x" & Natural'Image(Y));
     end;
 
+    function Alignment_To_String(Alignment:Line_Alignment_Type) return String is
+    begin
+        case Alignment is
+            when Align_Top => return "ATOP";
+            when Align_Center => return "ACENTER";
+            when Align_Bottom => return "ABOTTOM";
+        end case;
+    end;
+
+    function Alignment_To_String(Alignment:Column_Alignment_Type) return String is
+    begin
+        case Alignment is
+            when Align_Left => return "ALEFT";
+            when Align_Center => return "ACENTER";
+            when Align_Right => return "ARIGHT";
+        end case;
+    end;
+
+    function Alignment_Line(Line_Index: Positive; Alignment:Line_Alignment_Type) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("ALIGNMENTLIN" & Integer'Image(Line_Index-1), Alignment_To_String(Alignment));
+    end;
+
+    function Alignment_Column(Column_Index: Positive; Alignment:Column_Alignment_Type) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("ALIGNMENTCOL" & Integer'Image(Column_Index-1), Alignment_To_String(Alignment));
+    end;
+
+    function Alignment_Lines(Alignment:Line_Alignment_Type) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("ALIGNMENTLIN", Alignment_To_String(Alignment));
+    end;
+
+    function Alignment_Columns(Alignment:Column_Alignment_Type) return Attribute_Declaration_Type is
+    begin
+        return Common_Attribute("ALIGNMENTCOL", Alignment_To_String(Alignment));
+    end;
+
     procedure Set(Ih: Handle; Attribute:Attribute_Declaration_Type) is
         use UB;
     begin
